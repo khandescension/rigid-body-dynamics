@@ -1,12 +1,12 @@
 
 // The main constructor of the library.
 
-var Art = function (canvas) {
+var Canvas = function (canvas) {
 
-  // Let Art be called without `new`.
+  // Let Canvas be called without `new`.
 
-  if (!(this instanceof Art)) {
-    return new Art(canvas);
+  if (!(this instanceof Canvas)) {
+    return new Canvas(canvas);
   }
 
   // Give the modules a reference to the core and extend it with every registered module.
@@ -46,7 +46,7 @@ var Art = function (canvas) {
 
 };
 
-Art.prototype.add = function () {
+Canvas.prototype.add = function () {
 
   // Apply Array's push method to add the objects instantly.
 
@@ -64,7 +64,7 @@ Art.prototype.add = function () {
 
 };
 
-Art.prototype.remove = function () {
+Canvas.prototype.remove = function () {
 
   // Applying Array's splice method will not work, so loop over it instead.
 
@@ -78,13 +78,13 @@ Art.prototype.remove = function () {
 
 // The modules of the core.
 
-Art.prototype.modules = {
+Canvas.prototype.modules = {
   display: {
     Base: function (options) {
 
       // Initialize variables.
 
-      var core = Art.prototype.modules.display.Base.core,
+      var core = Canvas.prototype.modules.display.Base.core,
         extend = core.utility.extend,
         defaults = {
           x: 0,
@@ -135,7 +135,7 @@ Art.prototype.modules = {
 
       extend(this, extend(defaults, options));
 
-      this.velocity = Art.prototype.modules.physics.vector(this.velocity.x, this.velocity.y);
+      this.velocity = Canvas.prototype.modules.physics.vector(this.velocity.x, this.velocity.y);
 
       // core.objects.push(this); 
       // displaces groups for some reason...
@@ -321,8 +321,8 @@ Art.prototype.modules = {
         // Declare variables for brevity and using defaults if options are missing.
 
         var object = options.object || this,
-          defaults = Art.prototype.modules.animation.defaults,
-          easing = typeof options.easing === 'function' ? options.easing : defaults.easing[options.easing] || defaults.easing[Art.prototype.modules.utility.toCamelCase(options.easing)] || defaults.easing.linear,
+          defaults = Canvas.prototype.modules.animation.defaults,
+          easing = typeof options.easing === 'function' ? options.easing : defaults.easing[options.easing] || defaults.easing[Canvas.prototype.modules.utility.toCamelCase(options.easing)] || defaults.easing.linear,
           duration = typeof options.duration === 'number' ? options.duration : defaults.durations[options.duration] || defaults.durations.normal,
           start = performance.now(),
           total = start + duration,
@@ -349,7 +349,7 @@ Art.prototype.modules = {
               }
             }
 
-            Art.prototype.modules.animation.animate({
+            Canvas.prototype.modules.animation.animate({
               object: object,
               properties: properties,
               easing: easing,
@@ -402,7 +402,7 @@ Art.prototype.modules = {
           oldS = _object.stroke;
 
         if (fill) {
-          var infoF = Art.prototype.modules.utility.hslaInformation(_object.fill),
+          var infoF = Canvas.prototype.modules.utility.hslaInformation(_object.fill),
             currF = infoF;
 
           for (var f in infoF) {
@@ -417,7 +417,7 @@ Art.prototype.modules = {
         }
 
         if (stroke) {
-          var infoS = Art.prototype.modules.utility.hslaInformation(_object.stroke),
+          var infoS = Canvas.prototype.modules.utility.hslaInformation(_object.stroke),
             currS = infoS;
 
           for (var s in infoS) {
@@ -435,7 +435,7 @@ Art.prototype.modules = {
 
             _object.stroke = oldS;
 
-            Art.prototype.modules.animation.animate({
+            Canvas.prototype.modules.animation.animate({
               object: _object,
               properties: _properties,
               callback: _animate,
@@ -473,7 +473,7 @@ Art.prototype.modules = {
                     currF[_f] = _properties[p][_f] > currF[_f] ? currF[_f] + increment : currF[_f] - increment;
                   }
                 }
-                _object[p] = Art.prototype.modules.utility.color({
+                _object[p] = Canvas.prototype.modules.utility.color({
                   hue: Number(String(currF.hue instanceof Number ? currF.hue : infoF.hue).replace('%', '')),
                   saturation: Number(String(currF.saturation instanceof Number ? currF.saturation : infoF.saturation).replace('%', '')),
                   light: Number(String(currF.light instanceof Number ? currF.light : infoF.light).replace('%', '')),
@@ -485,7 +485,7 @@ Art.prototype.modules = {
                     currS[_s] = _properties[p][_s] > currS[_s] ? currS[_s] + increment : currS[_s] - increment;
                   }
                 }
-                _object[p] = Art.prototype.modules.utility.color({
+                _object[p] = Canvas.prototype.modules.utility.color({
                   hue: Number(String(currS.hue instanceof Number ? currS.hue : infoS.hue).replace('%', '')),
                   saturation: Number(String(currS.saturation instanceof Number ? currS.saturation : infoS.saturation).replace('%', '')),
                   light: Number(String(currS.light instanceof Number ? currS.light : infoS.light).replace('%', '')),
@@ -571,8 +571,8 @@ Art.prototype.modules = {
 
         for (; c < a.children.length; c += 1) {
           for (var _c = c + 1; _c < b.children.length; _c += 1) {
-            var _a = Art.prototype.modules.utility.extend({}, a.children[c]),
-              _b = Art.prototype.modules.utility.extend({}, b.children[_c]);
+            var _a = Canvas.prototype.modules.utility.extend({}, a.children[c]),
+              _b = Canvas.prototype.modules.utility.extend({}, b.children[_c]);
             _a.x += _a.parent.x;
             _a.y += _a.parent.y;
             _b.x += _b.parent.x;
@@ -599,7 +599,7 @@ Art.prototype.modules = {
           x = 0;
 
         for (; x < a.children.length; x += 1) {
-          var y = Art.prototype.modules.utility.extend({}, a.children[x]);
+          var y = Canvas.prototype.modules.utility.extend({}, a.children[x]);
           y.x += y.parent.x;
           y.y += y.parent.y;
           y.velocity = y.parent.velocity;
@@ -622,7 +622,7 @@ Art.prototype.modules = {
           _x = 0;
 
         for (; _x < b.children.length; _x += 1) {
-          var z = Art.prototype.modules.utility.extend({}, b.children[_x]);
+          var z = Canvas.prototype.modules.utility.extend({}, b.children[_x]);
           z.x += z.parent.x;
           z.y += z.parent.y;
           z.velocity = z.parent.velocity;
@@ -723,7 +723,7 @@ Art.prototype.modules = {
   }
 };
 
-Art.prototype.modules.display.Base.extend = function (options) {
+Canvas.prototype.modules.display.Base.extend = function (options) {
 
   // Initialize variables.
 
@@ -735,7 +735,7 @@ Art.prototype.modules.display.Base.extend = function (options) {
   // Redefine the constructor to also call the Base and any Supers.
 
   constructor = function () {
-    Art.prototype.modules.display.Base.apply(this, arguments);
+    Canvas.prototype.modules.display.Base.apply(this, arguments);
     for (var s = 0; s < Supers.length; s += 1) {
       Supers[s].apply(this, arguments);
     }
@@ -745,7 +745,7 @@ Art.prototype.modules.display.Base.extend = function (options) {
   // Extend the prototype of the constructor with the Base and Supers.
 
   var prototype = constructor.prototype,
-    extend = Art.prototype.modules.utility.extend;
+    extend = Canvas.prototype.modules.utility.extend;
 
   for (var p in options) {
     if (p !== 'constructor' && p !== 'id' && p !== 'Supers' && p !== 'statics') {
@@ -757,7 +757,7 @@ Art.prototype.modules.display.Base.extend = function (options) {
     }
   }
 
-  extend(prototype, extend(options.constructor.prototype, Art.prototype.modules.display.Base.prototype));
+  extend(prototype, extend(options.constructor.prototype, Canvas.prototype.modules.display.Base.prototype));
 
   for (var s = 0; s < Supers.length; s += 1) {
     extend(prototype, Supers[s].prototype);
@@ -779,15 +779,15 @@ Art.prototype.modules.display.Base.extend = function (options) {
     return self;
   };
 
-  return id ? Art.prototype.modules.display[id] = $constructor : $constructor;
+  return id ? Canvas.prototype.modules.display[id] = $constructor : $constructor;
 
 };
 
-Art.prototype.modules.display.Base.prototype.animate = function (options) {
+Canvas.prototype.modules.display.Base.prototype.animate = function (options) {
 
   // Initialize variables.
 
-  var modules = Art.prototype.modules,
+  var modules = Canvas.prototype.modules,
     animation = modules.animation.animate({
       object: this,
       properties: options.properties,
@@ -802,12 +802,12 @@ Art.prototype.modules.display.Base.prototype.animate = function (options) {
 
 };
 
-Art.prototype.modules.display.Base.prototype.clone = function (options) {
+Canvas.prototype.modules.display.Base.prototype.clone = function (options) {
 
   // Initialize variables.
 
-  var self = new Art.prototype.modules.display.Base(),
-    extend = Art.prototype.modules.utility.extend;
+  var self = new Canvas.prototype.modules.display.Base(),
+    extend = Canvas.prototype.modules.utility.extend;
 
   // Extend the newly created object with `this`.
 
@@ -821,17 +821,17 @@ Art.prototype.modules.display.Base.prototype.clone = function (options) {
 
 };
 
-Art.prototype.modules.display.Base.prototype.path = function (options) {
+Canvas.prototype.modules.display.Base.prototype.path = function (options) {
 
   // Return and call the path function at once.
 
-  return Art.prototype.modules.animation.path(Art.prototype.modules.utility.extend({
+  return Canvas.prototype.modules.animation.path(Canvas.prototype.modules.utility.extend({
     object: this
   }, options));
 
 };
 
-Art.prototype.modules.display.Base.prototype.move = function (options) {
+Canvas.prototype.modules.display.Base.prototype.move = function (options) {
 
   // Move the object by the given velocity.
 
@@ -848,7 +848,7 @@ Art.prototype.modules.display.Base.prototype.move = function (options) {
 
 };
 
-Art.prototype.modules.display.Base.prototype.moveTo = function (options) {
+Canvas.prototype.modules.display.Base.prototype.moveTo = function (options) {
 
   // Move the object to the given coordinate.
 
@@ -861,7 +861,7 @@ Art.prototype.modules.display.Base.prototype.moveTo = function (options) {
 
 };
 
-Art.prototype.modules.display.Base.prototype.rotate = function (rotation) {
+Canvas.prototype.modules.display.Base.prototype.rotate = function (rotation) {
 
   // Rotate the object by the given rotation.
 
@@ -873,7 +873,7 @@ Art.prototype.modules.display.Base.prototype.rotate = function (rotation) {
 
 };
 
-Art.prototype.modules.display.Base.prototype.rotateTo = function (angle) {
+Canvas.prototype.modules.display.Base.prototype.rotateTo = function (angle) {
 
   // Rotate the object to a certain position.
 
@@ -885,13 +885,13 @@ Art.prototype.modules.display.Base.prototype.rotateTo = function (angle) {
 
 };
 
-Art.prototype.modules.display.Base.prototype.collides = function (b, callback) {
+Canvas.prototype.modules.display.Base.prototype.collides = function (b, callback) {
 
   // If a callback is supplied and a collision is detected, call it.
 
   if (this._collision && b._collision) {
 
-    var result = Art.prototype.modules.physics.collision(this, b);
+    var result = Canvas.prototype.modules.physics.collision(this, b);
 
     if (result) {
       if (callback) {
@@ -907,7 +907,7 @@ Art.prototype.modules.display.Base.prototype.collides = function (b, callback) {
 
 };
 
-Art.prototype.modules.display.Base.prototype.force = function (type, options) {
+Canvas.prototype.modules.display.Base.prototype.force = function (type, options) {
 
   // Add or remove based on `type`.
 
@@ -938,12 +938,12 @@ Art.prototype.modules.display.Base.prototype.force = function (type, options) {
 
 };
 
-Art.prototype.modules.display.Base.prototype.dragAndDrop = function (callback) {
+Canvas.prototype.modules.display.Base.prototype.dragAndDrop = function (callback) {
 
   // Initialize variables.
 
   var old = this.velocity,
-    canvas = Art.prototype.modules.display.Base.core.canvas,
+    canvas = Canvas.prototype.modules.display.Base.core.canvas,
     object = this,
     _velocity = object._velocity,
     _force = object._force;
@@ -985,7 +985,7 @@ Art.prototype.modules.display.Base.prototype.dragAndDrop = function (callback) {
 
   canvas.addEventListener('mousedown', function (event) {
 
-    if (Art.prototype.modules.utility.containsPoint(event, object.boundaries())) {
+    if (Canvas.prototype.modules.utility.containsPoint(event, object.boundaries())) {
 
       object.dragging = true;
 
@@ -1002,11 +1002,11 @@ Art.prototype.modules.display.Base.prototype.dragAndDrop = function (callback) {
 
 };
 
-Art.prototype.modules.display.Base.prototype.walls = function (options) {
+Canvas.prototype.modules.display.Base.prototype.walls = function (options) {
 
   if (this._walls) {
 
-    return Art.prototype.modules.physics.walls(Art.prototype.modules.utility.extend({
+    return Canvas.prototype.modules.physics.walls(Canvas.prototype.modules.utility.extend({
       object: this
     }, options));
 
@@ -1014,7 +1014,7 @@ Art.prototype.modules.display.Base.prototype.walls = function (options) {
 
 };
 
-Art.prototype.modules.display.Base.prototype.spring = function (object, spring) {
+Canvas.prototype.modules.display.Base.prototype.spring = function (object, spring) {
 
   // Set defaults.
 
@@ -1031,7 +1031,7 @@ Art.prototype.modules.display.Base.prototype.spring = function (object, spring) 
 
 };
 
-Art.prototype.modules.display.Base.prototype.gravitate = function (bodyB) {
+Canvas.prototype.modules.display.Base.prototype.gravitate = function (bodyB) {
 
   // Initialize variables.
 
@@ -1056,12 +1056,12 @@ Art.prototype.modules.display.Base.prototype.gravitate = function (bodyB) {
 
 };
 
-Art.prototype.modules.display.Base.extend({
+Canvas.prototype.modules.display.Base.extend({
   constructor: function (options) {
 
     // Initialize variables.
 
-    var extend = Art.prototype.modules.utility.extend,
+    var extend = Canvas.prototype.modules.utility.extend,
       defaults = {
         radius: 25
       };
@@ -1076,7 +1076,7 @@ Art.prototype.modules.display.Base.extend({
 
     // Initialize variables.
 
-    var g = Art.prototype.modules.display.circle.core.graphics,
+    var g = Canvas.prototype.modules.display.circle.core.graphics,
       t = this;
 
     // Execute the drawing commands.
@@ -1120,12 +1120,12 @@ Art.prototype.modules.display.Base.extend({
   }
 });
 
-Art.prototype.modules.display.Base.extend({
+Canvas.prototype.modules.display.Base.extend({
   constructor: function (options) {
 
     // Initialize variables.
 
-    var extend = Art.prototype.modules.utility.extend,
+    var extend = Canvas.prototype.modules.utility.extend,
       defaults = {
         radius: {
           x: 50,
@@ -1144,7 +1144,7 @@ Art.prototype.modules.display.Base.extend({
     // Initialize variables.
 
     var t = this,
-      g = Art.prototype.modules.display.Base.core.graphics;
+      g = Canvas.prototype.modules.display.Base.core.graphics;
 
     // Execute the drawing commands.
 
@@ -1186,12 +1186,12 @@ Art.prototype.modules.display.Base.extend({
   }
 });
 
-Art.prototype.modules.display.Base.extend({
+Canvas.prototype.modules.display.Base.extend({
   constructor: function (options) {
 
     // Initialize variables.
 
-    var extend = Art.prototype.modules.utility.extend,
+    var extend = Canvas.prototype.modules.utility.extend,
       defaults = {
         width: 50,
         height: 25
@@ -1207,7 +1207,7 @@ Art.prototype.modules.display.Base.extend({
 
     // Initialize variables.
 
-    var g = Art.prototype.modules.display.rectangle.core.graphics,
+    var g = Canvas.prototype.modules.display.rectangle.core.graphics,
       t = this;
 
     // Execute the drawing commands.
@@ -1255,7 +1255,7 @@ Art.prototype.modules.display.Base.extend({
     var cx = this.x,
       cy = this.y,
       angle = this.rotation,
-      corner = Art.prototype.modules.physics.corner;
+      corner = Canvas.prototype.modules.physics.corner;
 
     // Get the new corner points.
 
@@ -1292,13 +1292,13 @@ Art.prototype.modules.display.Base.extend({
 
 });
 
-Art.prototype.modules.display.Base.extend({
+Canvas.prototype.modules.display.Base.extend({
 
   constructor: function (options) {
 
     // Initialize variables.
 
-    var extend = Art.prototype.modules.utility.extend,
+    var extend = Canvas.prototype.modules.utility.extend,
       defaults = {
         width: 25,
         height: 25,
@@ -1318,7 +1318,7 @@ Art.prototype.modules.display.Base.extend({
     // Initialize variables.
 
     var t = this,
-      g = Art.prototype.modules.display.squircle.core.graphics;
+      g = Canvas.prototype.modules.display.squircle.core.graphics;
 
     // Execute the drawing commands.
 
@@ -1369,13 +1369,13 @@ Art.prototype.modules.display.Base.extend({
 
 });
 
-Art.prototype.modules.display.Base.extend({
+Canvas.prototype.modules.display.Base.extend({
 
   constructor: function (options) {
 
     // Initialize variables.
 
-    var extend = Art.prototype.modules.utility.extend,
+    var extend = Canvas.prototype.modules.utility.extend,
       defaults = {
         sides: 3,
         length: 10,
@@ -1393,7 +1393,7 @@ Art.prototype.modules.display.Base.extend({
 
     // Initialize variables.
 
-    var g = Art.prototype.modules.display.polygon.core.graphics,
+    var g = Canvas.prototype.modules.display.polygon.core.graphics,
       t = this;
 
     // Reset the angle if the number of sides changed.
@@ -1442,17 +1442,17 @@ Art.prototype.modules.display.Base.extend({
   },
   
   momentOfInertia: function () {
-    return new Art.prototype.modules.display.rectangle().momentOfInertia.call(this.boundaries());
+    return new Canvas.prototype.modules.display.rectangle().momentOfInertia.call(this.boundaries());
   }
 
 });
 
-Art.prototype.modules.display.Base.extend({
+Canvas.prototype.modules.display.Base.extend({
   constructor: function (options) {
 
     // Initialize variables.
 
-    var extend = Art.prototype.modules.utility.extend,
+    var extend = Canvas.prototype.modules.utility.extend,
       defaults = {
         text: 'Hello, world.',
         font: 'normal 20px Helvetica'
@@ -1468,7 +1468,7 @@ Art.prototype.modules.display.Base.extend({
 
     // Initialize variables.
 
-    var g = Art.prototype.modules.display.text.core.graphics,
+    var g = Canvas.prototype.modules.display.text.core.graphics,
       t = this;
 
     // Execute the drawing commands.
@@ -1503,40 +1503,40 @@ Art.prototype.modules.display.Base.extend({
     return {
       x: this.x,
       y: this.y,
-      width: Art.prototype.modules.display.text.core.graphics.measureText(this.text).width,
-      height: new Art.prototype.modules.display.graph().textHeight(this.font)
+      width: Canvas.prototype.modules.display.text.core.graphics.measureText(this.text).width,
+      height: new Canvas.prototype.modules.display.graph().textHeight(this.font)
     };
 
   },
   
   momentOfInertia: function () {
-    return new Art.prototype.modules.display.rectangle().momentOfInertia.call(this.boundaries());
+    return new Canvas.prototype.modules.display.rectangle().momentOfInertia.call(this.boundaries());
   }
 
 });
 
-Art.prototype.modules.display.path = function (path) {
+Canvas.prototype.modules.display.path = function (path) {
 
   // Let Path be called without `new`.
 
-  if (!(this instanceof Art.prototype.modules.display.path)) {
-    return new Art.prototype.modules.display.path(path);
+  if (!(this instanceof Canvas.prototype.modules.display.path)) {
+    return new Canvas.prototype.modules.display.path(path);
   }
 
   // Extend this with the given path.
 
-  Art.prototype.modules.utility.extend(this, {
+  Canvas.prototype.modules.utility.extend(this, {
     path: path
   });
 
 };
 
-Art.prototype.modules.display.path.prototype.draw = function () {
+Canvas.prototype.modules.display.path.prototype.draw = function () {
 
   // Initialize variables.
 
   var path = this.path,
-    graphics = Art.prototype.modules.display.path.core.graphics;
+    graphics = Canvas.prototype.modules.display.path.core.graphics;
 
   // Execute the drawing commands.
 
@@ -1548,12 +1548,12 @@ Art.prototype.modules.display.path.prototype.draw = function () {
 
 };
 
-Art.prototype.modules.display.Base.extend({
+Canvas.prototype.modules.display.Base.extend({
   constructor: function (options) {
 
     // Initialize variables.
 
-    var extend = Art.prototype.modules.utility.extend,
+    var extend = Canvas.prototype.modules.utility.extend,
       defaults = {
         points: [],
         tension: 0.5,
@@ -1571,8 +1571,8 @@ Art.prototype.modules.display.Base.extend({
     // Initialize variables.
 
     var t = this,
-      g = Art.prototype.modules.display.curve.core.graphics,
-      spline = Art.prototype.modules.display.curve.spline(t.points, t.tension, t.segments, t.closed);
+      g = Canvas.prototype.modules.display.curve.core.graphics,
+      spline = Canvas.prototype.modules.display.curve.spline(t.points, t.tension, t.segments, t.closed);
 
     // Execute the drawing commands.
 
@@ -1595,7 +1595,7 @@ Art.prototype.modules.display.Base.extend({
   }
 });
 
-Art.prototype.modules.display.curve.distance = function (a, b, c, d) {
+Canvas.prototype.modules.display.curve.distance = function (a, b, c, d) {
 
   // Calculate the x and y distances.
 
@@ -1608,7 +1608,7 @@ Art.prototype.modules.display.curve.distance = function (a, b, c, d) {
 
 };
 
-Art.prototype.modules.display.curve.coordinates = function (points, position) {
+Canvas.prototype.modules.display.curve.coordinates = function (points, position) {
 
   // Initialize variables.
 
@@ -1620,7 +1620,7 @@ Art.prototype.modules.display.curve.coordinates = function (points, position) {
   // Loop through the points and calculate the coordinate based on the current step.
 
   for (i = 2; i < l; i += 2) {
-    _final = Art.prototype.modules.display.curve.distance(points[i], points[i + 1], points[i - 2], points[i - 1]);
+    _final = Canvas.prototype.modules.display.curve.distance(points[i], points[i + 1], points[i - 2], points[i - 1]);
     length += _final;
     if (position < length && _final) {
       length -= _final;
@@ -1640,12 +1640,12 @@ Art.prototype.modules.display.curve.coordinates = function (points, position) {
 
 // Don't overwrite `Function.prototype.length`, so use an underscore for the name.
 
-Art.prototype.modules.display.curve._length = function (points) {
+Canvas.prototype.modules.display.curve._length = function (points) {
 
   // Loop over the points and calculate the sum.
 
   for (var length = 0, i = 0; i < points.length - 2; i += 2) {
-    length += Art.prototype.modules.display.curve.distance(points[i + 2], points[i + 3], points[i], points[i + 1]);
+    length += Canvas.prototype.modules.display.curve.distance(points[i + 2], points[i + 3], points[i], points[i + 1]);
   }
 
   // Return it.
@@ -1654,7 +1654,7 @@ Art.prototype.modules.display.curve._length = function (points) {
 
 };
 
-Art.prototype.modules.display.curve.spline = function (points, tension, segments, closed) {
+Canvas.prototype.modules.display.curve.spline = function (points, tension, segments, closed) {
 
   // Set defaults if they are not provided.
 
@@ -1756,12 +1756,12 @@ Art.prototype.modules.display.curve.spline = function (points, tension, segments
 
 };
 
-Art.prototype.modules.animation.path = function (options) {
+Canvas.prototype.modules.animation.path = function (options) {
 
   // Initialize variables.
 
-  var _spline = Art.prototype.modules.display.curve.spline(options.points, options.tension, options.segments, options.closed),
-    _length = Art.prototype.modules.display.curve._length(_spline),
+  var _spline = Canvas.prototype.modules.display.curve.spline(options.points, options.tension, options.segments, options.closed),
+    _length = Canvas.prototype.modules.display.curve._length(_spline),
     t = 0,
     speed = options.speed,
     object = options.object || this,
@@ -1770,12 +1770,12 @@ Art.prototype.modules.animation.path = function (options) {
   // Perform the animation with requestAnimationFrame.
 
   (function update() {
-    Art.prototype.modules.ticker.request(update);
+    Canvas.prototype.modules.ticker.request(update);
     t += speed;
     if (t < 0 || t >= _length) {
       speed *= -1;
     }
-    position = Art.prototype.modules.display.curve.coordinates(_spline, t);
+    position = Canvas.prototype.modules.display.curve.coordinates(_spline, t);
     object.x = position.x || object.x;
     object.y = position.y || object.y;
   }());
@@ -1786,12 +1786,12 @@ Art.prototype.modules.animation.path = function (options) {
 
 };
 
-Art.prototype.modules.display.Base.extend({
+Canvas.prototype.modules.display.Base.extend({
   constructor: function (options) {
 
     // Initialize variables.
 
-    var extend = Art.prototype.modules.utility.extend,
+    var extend = Canvas.prototype.modules.utility.extend,
       defaults = {
         width: 250,
         margin: {
@@ -1842,7 +1842,7 @@ Art.prototype.modules.display.Base.extend({
     // Initialize variables.
 
     var t = this,
-      g = Art.prototype.modules.display.Base.core.graphics;
+      g = Canvas.prototype.modules.display.Base.core.graphics;
 
     // Execute the drawing commands.
 
@@ -1912,12 +1912,12 @@ Art.prototype.modules.display.Base.extend({
 
 });
 
-Art.prototype.modules.display.Base.extend({
+Canvas.prototype.modules.display.Base.extend({
   constructor: function (options) {
 
     // Initialize variables.
 
-    var extend = Art.prototype.modules.utility.extend,
+    var extend = Canvas.prototype.modules.utility.extend,
       defaults = {
         colors: [],
         data: [
@@ -1942,7 +1942,7 @@ Art.prototype.modules.display.Base.extend({
     // Populate the array of colors.
 
     for (var d = 0; d < defaults.data.length; d += 1) {
-      defaults.colors.push(Art.prototype.modules.utility.color({
+      defaults.colors.push(Canvas.prototype.modules.utility.color({
         hue: Math.random() * 360
       }));
     }
@@ -1958,7 +1958,7 @@ Art.prototype.modules.display.Base.extend({
     // Initialize variables.
 
     var t = this,
-      g = Art.prototype.modules.display.Base.core.graphics,
+      g = Canvas.prototype.modules.display.Base.core.graphics,
       last = 0,
       total = 0,
       pieData = [];
@@ -2028,12 +2028,12 @@ Art.prototype.modules.display.Base.extend({
 
 });
 
-Art.prototype.modules.display.Base.extend({
+Canvas.prototype.modules.display.Base.extend({
   constructor: function (options) {
 
     // Initialize variables.
 
-    var extend = Art.prototype.modules.utility.extend,
+    var extend = Canvas.prototype.modules.utility.extend,
       defaults = {
         rows: 5,
         columns: 5,
@@ -2061,7 +2061,7 @@ Art.prototype.modules.display.Base.extend({
     // Initialize variables.
 
     var t = this,
-      g = Art.prototype.modules.display.Base.core.graphics;
+      g = Canvas.prototype.modules.display.Base.core.graphics;
 
     // Execute the drawing commands.
 
@@ -2109,12 +2109,12 @@ Art.prototype.modules.display.Base.extend({
 
 });
 
-Art.prototype.modules.display.Base.extend({
+Canvas.prototype.modules.display.Base.extend({
   constructor: function (options) {
 
     // Initialize variables.
 
-    var extend = Art.prototype.modules.utility.extend,
+    var extend = Canvas.prototype.modules.utility.extend,
       defaults = {
         spikes: 5,
         radius: {
@@ -2134,7 +2134,7 @@ Art.prototype.modules.display.Base.extend({
     // Initialize variables.
 
     var t = this,
-      g = Art.prototype.modules.display.star.core.graphics,
+      g = Canvas.prototype.modules.display.star.core.graphics,
       rotation = Math.PI / 2 * 3,
       step = Math.PI / t.spikes,
       s = 0;
@@ -2189,13 +2189,13 @@ Art.prototype.modules.display.Base.extend({
 
 });
 
-Art.prototype.modules.display.Base.extend({
+Canvas.prototype.modules.display.Base.extend({
 
   constructor: function (options) {
 
     // Initialize variables.
 
-    var extend = Art.prototype.modules.utility.extend,
+    var extend = Canvas.prototype.modules.utility.extend,
       defaults = {
         children: [],
         group: true
@@ -2220,7 +2220,7 @@ Art.prototype.modules.display.Base.extend({
     // Initialize variables.
 
     var t = this,
-      g = Art.prototype.modules.display.group.core.graphics,
+      g = Canvas.prototype.modules.display.group.core.graphics,
       c = 0;
 
     // Draw each child relative to the object.
@@ -2250,7 +2250,7 @@ Art.prototype.modules.display.Base.extend({
       aabb = child.boundaries();
       aabb.x += this.x;
       aabb.y += this.y;
-      result = result ? Art.prototype.modules.physics.aabb2(result, aabb, true) : aabb;
+      result = result ? Canvas.prototype.modules.physics.aabb2(result, aabb, true) : aabb;
       for (var _b in aabb) {
         if (_b === 'x') {
           x.push(aabb[_b]);
@@ -2287,12 +2287,12 @@ Art.prototype.modules.display.Base.extend({
 
 });
 
-Art.prototype.modules.physics.vector = function (x, y) {
+Canvas.prototype.modules.physics.vector = function (x, y) {
 
   // Let `vector` be called without `new`.
 
-  if (!(this instanceof Art.prototype.modules.physics.vector)) {
-    return new Art.prototype.modules.physics.vector(x, y);
+  if (!(this instanceof Canvas.prototype.modules.physics.vector)) {
+    return new Canvas.prototype.modules.physics.vector(x, y);
   }
 
   // Extend the object with the vector components.
@@ -2302,15 +2302,15 @@ Art.prototype.modules.physics.vector = function (x, y) {
 
 };
 
-Art.prototype.modules.physics.vector.prototype.clone = function () {
+Canvas.prototype.modules.physics.vector.prototype.clone = function () {
 
   // Return a clone of the vector.
 
-  return Art.prototype.modules.physics.vector(this.x, this.y);
+  return Canvas.prototype.modules.physics.vector(this.x, this.y);
 
 };
 
-Art.prototype.modules.physics.vector.prototype.dot = function (vector) {
+Canvas.prototype.modules.physics.vector.prototype.dot = function (vector) {
 
   // Return the dot product of the vector and another.
 
@@ -2318,19 +2318,19 @@ Art.prototype.modules.physics.vector.prototype.dot = function (vector) {
 
 };
 
-Art.prototype.modules.physics.vector.prototype.vCross = function (vector) {
+Canvas.prototype.modules.physics.vector.prototype.vCross = function (vector) {
   return this.x * vector.y - this.y * vector.x;
 };
 
-Art.prototype.modules.physics.vector.prototype.sCross = function (scalar) {
-  return Art.prototype.modules.physics.vector(scalar * this.y, -scalar * this.x);
+Canvas.prototype.modules.physics.vector.prototype.sCross = function (scalar) {
+  return Canvas.prototype.modules.physics.vector(scalar * this.y, -scalar * this.x);
 };
 
-Art.prototype.modules.physics.vector.prototype._sCross = function (scalar) {
-  return Art.prototype.modules.physics.vector(-scalar * this.y, scalar * this.x);
+Canvas.prototype.modules.physics.vector.prototype._sCross = function (scalar) {
+  return Canvas.prototype.modules.physics.vector(-scalar * this.y, scalar * this.x);
 };
 
-Art.prototype.modules.physics.vector.prototype.length = function () {
+Canvas.prototype.modules.physics.vector.prototype.length = function () {
 
   // Return the length of the vector.
 
@@ -2338,7 +2338,7 @@ Art.prototype.modules.physics.vector.prototype.length = function () {
 
 };
 
-Art.prototype.modules.physics.vector.prototype.normalize = function () {
+Canvas.prototype.modules.physics.vector.prototype.normalize = function () {
 
   // Normalize the vector.
 
@@ -2352,7 +2352,7 @@ Art.prototype.modules.physics.vector.prototype.normalize = function () {
 
 };
 
-Art.prototype.modules.physics.vector.prototype.rotate = function (angle) {
+Canvas.prototype.modules.physics.vector.prototype.rotate = function (angle) {
 
   // Rotate the vector.
 
@@ -2365,7 +2365,7 @@ Art.prototype.modules.physics.vector.prototype.rotate = function (angle) {
 
 };
 
-Art.prototype.modules.physics.vector.prototype.add = function (vector) {
+Canvas.prototype.modules.physics.vector.prototype.add = function (vector) {
 
   // Add the components of another vector.
 
@@ -2378,7 +2378,7 @@ Art.prototype.modules.physics.vector.prototype.add = function (vector) {
 
 };
 
-Art.prototype.modules.physics.vector.prototype.subtract = function (vector) {
+Canvas.prototype.modules.physics.vector.prototype.subtract = function (vector) {
 
   // Add the components of another vector.
 
@@ -2391,23 +2391,23 @@ Art.prototype.modules.physics.vector.prototype.subtract = function (vector) {
 
 };
 
-Art.prototype.modules.physics.vector.prototype.multiply = function (scalar) {
+Canvas.prototype.modules.physics.vector.prototype.multiply = function (scalar) {
 
   // Return the product of the vector and another.
 
-  return Art.prototype.modules.physics.vector(this.x * scalar, this.y * scalar);
+  return Canvas.prototype.modules.physics.vector(this.x * scalar, this.y * scalar);
 
 };
 
-Art.prototype.modules.physics.vector.prototype.divide = function (scalar) {
+Canvas.prototype.modules.physics.vector.prototype.divide = function (scalar) {
 
   // Return the product of the vector and another.
 
-  return Art.prototype.modules.physics.vector(this.x / scalar, this.y / scalar);
+  return Canvas.prototype.modules.physics.vector(this.x / scalar, this.y / scalar);
 
 };
 
-Art.prototype.modules.physics.response = function (bodyA, bodyB) {
+Canvas.prototype.modules.physics.response = function (bodyA, bodyB) {
   var v;
   var vDelta;
   var lh;
@@ -2463,7 +2463,7 @@ Art.prototype.modules.physics.response = function (bodyA, bodyB) {
   return this.response.core;
 };
 
-Art.prototype.modules.physics.walls = function (options) {
+Canvas.prototype.modules.physics.walls = function (options) {
 
   // Initialize variables.
 
@@ -2547,7 +2547,7 @@ Art.prototype.modules.physics.walls = function (options) {
   } else {
 
     for (var o = 0; o < object.children.length; o += 1) {
-      var child = Art.prototype.modules.utility.extend({}, object.children[o]),
+      var child = Canvas.prototype.modules.utility.extend({}, object.children[o]),
         _offset = {};
       child.x += object.x;
       child.y += object.y;
@@ -2625,7 +2625,7 @@ Art.prototype.modules.physics.walls = function (options) {
 
 };
 
-Art.prototype.modules.physics.aabb2 = function (aabb1, aabb2, modify) {
+Canvas.prototype.modules.physics.aabb2 = function (aabb1, aabb2, modify) {
 
   // Initialize variables and calculate the union AABB.
 
@@ -2648,7 +2648,7 @@ Art.prototype.modules.physics.aabb2 = function (aabb1, aabb2, modify) {
 
 };
 
-Art.prototype.modules.physics.corner = function (x, y, _x, _y, rotation) {
+Canvas.prototype.modules.physics.corner = function (x, y, _x, _y, rotation) {
 
   // Initialize variables.
 
@@ -2678,7 +2678,7 @@ Art.prototype.modules.physics.corner = function (x, y, _x, _y, rotation) {
 
 };
 
-Art.prototype.modules.ticker.fps = (function () {
+Canvas.prototype.modules.ticker.fps = (function () {
 
   // Initialize variables.
 
@@ -2706,7 +2706,7 @@ Art.prototype.modules.ticker.fps = (function () {
 
 }());
 
-Art.prototype.modules.ticker.clear = function () {
+Canvas.prototype.modules.ticker.clear = function () {
 
   // Initialize variables.
 
@@ -2720,7 +2720,7 @@ Art.prototype.modules.ticker.clear = function () {
 
 };
 
-Art.prototype.modules.ticker.update = function () {
+Canvas.prototype.modules.ticker.update = function () {
 
   // Initialize variables.
 
@@ -2780,7 +2780,7 @@ Art.prototype.modules.ticker.update = function () {
 
 };
 
-Art.prototype.modules.ticker.loop = function (callback) {
+Canvas.prototype.modules.ticker.loop = function (callback) {
 
   // Initialize variables.
 
@@ -2800,7 +2800,7 @@ Art.prototype.modules.ticker.loop = function (callback) {
 
 };
 
-Art.prototype.modules.utility.random = function (options) {
+Canvas.prototype.modules.utility.random = function (options) {
 
   // Declare defaults and override them with the options.
 
@@ -2815,7 +2815,7 @@ Art.prototype.modules.utility.random = function (options) {
 
 };
 
-Art.prototype.modules.utility.toCamelCase = function (string) {
+Canvas.prototype.modules.utility.toCamelCase = function (string) {
 
   // Convert a dashed-string to a camelCase one.
 
@@ -2825,7 +2825,7 @@ Art.prototype.modules.utility.toCamelCase = function (string) {
 
 };
 
-Art.prototype.modules.utility.containsPoint = function (point, rectangle) {
+Canvas.prototype.modules.utility.containsPoint = function (point, rectangle) {
 
   // Simple AABB collision detection.
 
@@ -2833,7 +2833,7 @@ Art.prototype.modules.utility.containsPoint = function (point, rectangle) {
 
 };
 
-Art.prototype.modules.utility.color = function (options) {
+Canvas.prototype.modules.utility.color = function (options) {
 
   // Initialize variables.
 
@@ -2852,7 +2852,7 @@ Art.prototype.modules.utility.color = function (options) {
 
 };
 
-Art.prototype.modules.utility.plugin = function (options) {
+Canvas.prototype.modules.utility.plugin = function (options) {
 
   // Give the plugin a reference to the core.
 
@@ -2882,13 +2882,13 @@ Art.prototype.modules.utility.plugin = function (options) {
 
     // Extend the display object with the Base, also adding it to the display module.
 
-    Art.prototype.modules.display.Base.extend(display);
+    Canvas.prototype.modules.display.Base.extend(display);
 
   } else {
 
     // Otherwise, simply add the plugin to its respective module.
 
-    Art.prototype.modules[options.module][options.id] = options.plugin;
+    Canvas.prototype.modules[options.module][options.id] = options.plugin;
 
   }
 
@@ -2898,7 +2898,7 @@ Art.prototype.modules.utility.plugin = function (options) {
 
 };
 
-Art.prototype.modules.utility.pointer = function () {
+Canvas.prototype.modules.utility.pointer = function () {
 
   // Initialize variables.
 
@@ -2948,7 +2948,7 @@ Art.prototype.modules.utility.pointer = function () {
 
 };
 
-Art.prototype.modules.utility.resize = function (options) {
+Canvas.prototype.modules.utility.resize = function (options) {
 
   // @TODO: Figure out how to dynamically resize it from here.
 
@@ -2980,7 +2980,7 @@ Art.prototype.modules.utility.resize = function (options) {
 
 };
 
-Art.prototype.modules.utility.hslaInformation = function (hsla) {
+Canvas.prototype.modules.utility.hslaInformation = function (hsla) {
 
   // Declare variables for brevity and retrieve the information.
 
@@ -2998,7 +2998,7 @@ Art.prototype.modules.utility.hslaInformation = function (hsla) {
 
 };
 
-Art.prototype.modules.utility.style = function (options) {
+Canvas.prototype.modules.utility.style = function (options) {
 
   // Loop over the styles and apply them.
 
@@ -3014,7 +3014,7 @@ Art.prototype.modules.utility.style = function (options) {
 
 };
 
-Art.prototype.modules.utility.populate = function (options) {
+Canvas.prototype.modules.utility.populate = function (options) {
 
   // For `n` objects, populate a given array with the return value of the callback function.
 
@@ -3028,7 +3028,7 @@ Art.prototype.modules.utility.populate = function (options) {
 
 };
 
-Art.prototype.modules.utility.scratch = {
+Canvas.prototype.modules.utility.scratch = {
 
   types: {},
 
@@ -3064,10 +3064,10 @@ Art.prototype.modules.utility.scratch = {
   }
 };
 
-Art.prototype.modules.utility.scratch.register('vector', Art.prototype.modules.physics.vector);
+Canvas.prototype.modules.utility.scratch.register('vector', Canvas.prototype.modules.physics.vector);
 
 
-var world = Art().utility.resize({
+var world = Canvas().utility.resize({
     width: window.innerWidth,
     height: window.innerHeight
   }).utility.style({
